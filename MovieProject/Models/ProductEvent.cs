@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MovieProject.Models
 {
-    public class ProductData
+    public class ProductEvent
     {
         public int ID { get; set; }
         [Key]

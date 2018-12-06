@@ -51,6 +51,8 @@ namespace MovieProject.Controllers
         public async Task<IActionResult> CreateUser(string userName, string pwd)
         {
             var user = new User { UserName = userName };
+
+
             var result = await _umgr.CreateAsync(user, pwd);
             if (result.Succeeded)
             {
