@@ -36,7 +36,7 @@ namespace MovieProject.Controllers
             return Unauthorized();
         }
 
-        [HttpPost]
+        [HttpGet]
         [AllowAnonymous]
         [Route("logout/")]
         public async Task<IActionResult> Logout()
