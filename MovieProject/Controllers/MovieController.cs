@@ -40,7 +40,7 @@ namespace MovieProject.Controllers
         }
 
         // GET: api/movie/search/1111
-        [HttpGet("getProductEventData/{locatorID}")]
+        [HttpGet("events/{locatorID}")]
         public ProductEvent GetProductDataByMovieID(int locatorID)
         {
             return _context.ProductData.Find(locatorID);
