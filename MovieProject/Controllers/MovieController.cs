@@ -2,6 +2,8 @@
 using MovieProject.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using TMDbLib.Client;
 using TMDbLib.Objects.Search;
 
@@ -21,19 +23,41 @@ namespace MovieProject.Controllers
         }
 
         // GET: api/movie/search/star
-        [HttpGet("search/{searchText}/{userId}")]
-        public ActionResult<List<SearchMovie>> SearchMovies(string searchText, int userId)
+        [HttpGet("search/{searchText}")]
+        public ActionResult<List<SearchMovie>> SearchMovies(string searchText)
         {
             TMDbClient client = new TMDbClient(_apikey);
             var results = client.SearchMovieAsync(searchText).Result.Results;
-            
-            var user = _context.UserData.Find(userId);
-            if (user != null)
+            var userName = "";
+            var userID = "";
+
+            if (User != null && User.Identity.IsAuthenticated)
             {
-                _context.UserEvents.Add(new UserEvent { UserID = userId, SearchTerms = searchText, SearchResult = Newtonsoft.Json.JsonConvert.SerializeObject(results), EventDate = System.DateTime.Now });
+                userName = User.FindFirst(ClaimTypes.Name).Value;
+                userID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                _context.UserEvents.Add(new UserEvent { UserID = userID, UserName = userName, SearchTerms = searchText, SearchResult = Newtonsoft.Json.JsonConvert.SerializeObject(results), EventDate = System.DateTime.Now });
                 _context.SaveChanges();
             }
 
+            foreach(var m in results)
+            {
+                var productDataFound = _context.ProductData.Find(m.Id);
+                if (productDataFound == null)
+                    _context.ProductData.Add(new ProductData { LocatorID = m.Id, TotalSearchCount = 1 });
+                else
+                    productDataFound.TotalSearchCount++;
+            }
+
+            _context.SaveChanges();
+
+            return results;
+        }
+
+        // GET: api/movie/search/1111
+        [HttpGet("searchProduct/{locatorID}")]
+        public ActionResult<ProductData> GetProductDataByID(int locatorID)
+        {
+            var results = _context.ProductData.Find(locatorID);
             return results;
         }
 
@@ -45,38 +69,44 @@ namespace MovieProject.Controllers
             return client.GetMovieAsync(id).Result;
         }
 
-        // GET api/user/5
-        [HttpGet("user/{id}")]
-        public ActionResult<User> GetUserByID(int id)
+        // GET api/user/events/bflow101
+        [HttpGet("user/events/{userName}")]
+        public IQueryable<UserEvent> GetUserEventsByUserName(string userName)
         {
-            User u = _context.User.Find(id);
-            return u;
-        }
-
-        // GET api/user/events/101
-        [HttpGet("user/events/{id}")]
-        public IQueryable<UserEvent> GetUserEventsByUserID(int id)
-        {
-            var events = _context.UserEvents.Where(e => e.UserID == id);
+            var events = _context.UserEvents.Where(e => e.UserName.Equals(userName));
             return events;
         }
-
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
+        
+        [HttpPost("rent/{locatorID}")]
+        public async Task<IActionResult> RentMovie(int locatorID)
         {
-        }
+            TMDbClient client = new TMDbClient(_apikey);
+            var results = new List<TMDbLib.Objects.Movies.Movie>();
+            var userName = "";
+            var userID = "";
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+            if (User != null && User.Identity.IsAuthenticated)
+            {
+                userName = User.FindFirst(ClaimTypes.Name).Value;
+                userID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+                results.Add(await client.GetMovieAsync(locatorID));
+
+                foreach(var m in results)
+                {
+                    _context.UserEvents.Add(new UserEvent { UserID = userID, UserName = userName, MovieRental = m.Id, EventDate = System.DateTime.Now });
+
+                    var productDataFound = _context.ProductData.Find(m.Id);
+                    if (productDataFound == null)
+                        _context.ProductData.Add(new ProductData { LocatorID = m.Id, TotalRentalCount = 1 });
+                    else
+                        productDataFound.TotalRentalCount++;
+                }
+                _context.SaveChanges();
+                return Ok("Enjoy your movie!");
+            }
+
+            return Unauthorized();
         }
     }
 }

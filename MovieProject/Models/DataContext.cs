@@ -11,8 +11,7 @@ namespace MovieProject.Models
     {
         public DataContext(DbContextOptions<DataContext> o) 
             : base(o) { Database.EnsureCreated(); }
-
-        public DbSet<UserData> UserData { get; set; }
+        
         public DbSet<ProductData> ProductData { get; set; }
         public DbSet<UserEvent> UserEvents { get; set; }
         public DbSet<User> User { get; set; }
