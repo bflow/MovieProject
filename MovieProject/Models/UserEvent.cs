@@ -15,6 +15,5 @@ namespace MovieProject.Models
         public string SearchResult { get; set; }
         public DateTime EventDate { get; set; }
         public int MovieRental { get; set; }
-        public string UserID { get; set; }
     }
 }

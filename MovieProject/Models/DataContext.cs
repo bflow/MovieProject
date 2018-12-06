@@ -57,7 +57,6 @@ namespace MovieProject.Models
             {
                 UserEvents.Add(new UserEvent
                 {
-                        UserID = user.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value,
                         UserName = user.FindFirst(System.Security.Claims.ClaimTypes.Name).Value,
                         SearchTerms = searchText,
                         SearchResult = searchResults,
@@ -67,8 +66,7 @@ namespace MovieProject.Models
             if (eventType == 1)
             {
                 UserEvents.Add(new UserEvent
-                {
-                    UserID = user.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value,
+                { 
                     UserName = user.FindFirst(System.Security.Claims.ClaimTypes.Name).Value,
                     MovieRental = movieID,
                     EventDate = System.DateTime.Now

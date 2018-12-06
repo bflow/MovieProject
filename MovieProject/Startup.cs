@@ -51,7 +51,7 @@ namespace MovieProject
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "Titanic Movie API", Version = "v1" });
+                c.SwaggerDoc("v1", new Info { Title = "Skeleton Movie API", Version = "v0.5b" });
             });
         }
 
@@ -61,7 +61,6 @@ namespace MovieProject
             using (var svcScope = app.ApplicationServices.CreateScope())
             {
                 var context = svcScope.ServiceProvider.GetService<DataContext>();
-                AddSeedData(context);
             }
 
             if (env.IsDevelopment())
@@ -80,25 +79,12 @@ namespace MovieProject
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Titanic Movie API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "SkeletonMovieAPI V0.5b");
             });
 
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseMvc();
-        }
-
-        private static void AddSeedData(DataContext ctx)
-        {
-            //if (ctx.UserData.Count() < 1)
-            //{
-            //    for (int i = 100; i < 105; i++)
-            //    {
-            //        ctx.UserData.Add(new User { UserName = "User" + i.ToString()});
-            //    }
-
-            //    ctx.SaveChanges(true);
-            //}
         }
     }
 }

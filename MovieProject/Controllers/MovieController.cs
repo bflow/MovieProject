@@ -32,31 +32,10 @@ namespace MovieProject.Controllers
 
             if (User != null && User.Identity.IsAuthenticated)
             {
-                //_context.UserEvents.Add(new UserEvent {
-                //    UserID = User.FindFirst(ClaimTypes.NameIdentifier).Value,
-                //    UserName = User.FindFirst(ClaimTypes.Name).Value,
-                //    SearchTerms = searchText,
-                //    SearchResult = Newtonsoft.Json.JsonConvert.SerializeObject(results),
-                //    EventDate = System.DateTime.Now
-                //});
-
                 _context.AddUserEvent((int)ProductEvents.Search, User, searchText, Newtonsoft.Json.JsonConvert.SerializeObject(results));
-                //_context.SaveChanges();
             }
 
-            //foreach (var m in results)
-            //{
-                //var productDataFound = _context.ProductData.Find(m.Id);
-                //if (productDataFound == null)
-                //    _context.ProductData.Add(new ProductEvent { LocatorID = m.Id, TotalSearchCount = 1 });
-                //else
-                //    productDataFound.TotalSearchCount++;
-
-                _context.AddIncrementProductEvent((int)ProductEvents.Search, results);
-            //}
-
-            
-
+            _context.AddIncrementProductEvent((int)ProductEvents.Search, results);
             return results;
         }
 
@@ -81,23 +60,25 @@ namespace MovieProject.Controllers
 
             if (User != null && User.Identity.IsAuthenticated)
             {
-                using (var transaction = _context.Database.BeginTransaction())
-                {
-                    try
-                    {
-                        _context.AddUserEvent((int)ProductEvents.Rental, User, movieID: locatorID);
-                        _context.AddIncrementProductEvent((int)ProductEvents.Rental, movieId: locatorID);
-                    }
-                    catch
-                    {
-                        transaction.Rollback();
-                        return StatusCode(StatusCodes.Status500InternalServerError);
-                    }
-                }
+                //NOTE: Kestrel (the new .NET CORE in-memory store) doesn't support transactions, so I show the transction wrapper in comments
+                //using (var transaction = _context.Database.BeginTransaction())
+                //{
+                //try
+                //{
+                 _context.AddUserEvent((int)ProductEvents.Rental, User, movieID: locatorID);
+                 _context.AddIncrementProductEvent((int)ProductEvents.Rental, movieId: locatorID);
+                //}
+                //catch
+                //{
+                //    transaction.Rollback();
+                //    return StatusCode(StatusCodes.Status500InternalServerError);
+                //}
+
 
                 return Ok("Enjoy your movie!");
-            }
 
+            }
+           
             return Unauthorized();
         }
     }   
