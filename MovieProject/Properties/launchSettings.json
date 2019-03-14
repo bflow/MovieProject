@@ -26,5 +26,8 @@
       },
       "applicationUrl": "https://localhost:44300;http://localhost:5000"
     }
-  }
+  },
+
+  "_comment": "https://stackoverflow.com/a/24957146/920506 fixed the SSL ports problem for local IIS express"
 }
+
