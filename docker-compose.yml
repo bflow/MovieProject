@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  movieproject:
+    environment:
+      ASPNETCORE_URLS: https://+:443;http://+:80
+      ASPNETCORE_Kestrel__Certificates__Default__Password: 43eb3456-5efa-4586-a0e5-0e55d3d5b23d
+      ASPNETCORE_Kestrel__Certificates__Default__Path: /root/.dotnet/https/MovieProject.pfx
+    image: ${DOCKER_REGISTRY-}movieproject
+    build:
+      context: .
+      dockerfile: MovieProject/Dockerfile
+    volumes:
+      - C:\tmp:/root/.dotnet/https
+
