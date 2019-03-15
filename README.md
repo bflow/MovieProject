@@ -4,14 +4,13 @@
 - Code Repo: https://github.com/bflow/MovieProject
 
 ## Project Goals
-- Investigate features of ASP.NET Core and Entity Framework Core
-- Stand up a working Kestrel database
-- Demonstrate GitHub-to-Heroku automated CI/CD flow
+- Demonstrate ASP.NET Identity of ASP.NET Core and Entity Framework Core
+- Demonstrate a working Kestrel database
 - Demonstrate .NET Core deployments to Heroku using Docker Linux container 
 
 ## Using the API
 **_Summary:_** 
-This API offers a skeleton of endpoints for user creation/authentication, movie database search, movie rental, plus search and rental activity by product and user. 
+This API offers endpoints for user creation/authentication, movie database search, movie rental, plus movie search and rental activity by product and user. 
 
 **_Methods:_**
 ```
