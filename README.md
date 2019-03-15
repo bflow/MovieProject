@@ -1,6 +1,6 @@
 ## Project Info
 - Built with [ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core/?view=aspnetcore-2.1) and [Entity Framework Core](https://docs.microsoft.com/en-us/ef/core/)
-- Hosted on Heroku as Docker Container: https://netcore2heroku-docker.herokuapp.com/swagger/index.html
+- Hosted on Heroku as Docker Container: https://netcore2heroku-docker.herokuapp.com/swagger
 - Code Repo: https://github.com/bflow/MovieProject
 
 ## Project Goals
