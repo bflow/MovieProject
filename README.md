@@ -44,7 +44,7 @@ Registers a Rental event against the authenticated user and increments the produ
 
 ## Usage
 **Sample Demonstration Workflow:**
-1. Browse to https://netcore2api.herokuapp.com/swagger
+1. Browse to https://netcore2heroku-docker.herokuapp.com/swagger
 1. Use the **Movie/search/{searchText}** route to search against the term 'fletch' (without quotes.) Note the id (9749) of the first movie in the resultset.
 3. Use the **Movie/events/{locatorID}** route to search on locator 9749. Observe that the previous search has been counted for this movie. 
 4. Use the **Login/create/{userName}/{pwd}** route to create a username and password. Password must be at least six characters and are limited to alphanumerics plus the characters -._@+. This user will be auto-authenticated.
