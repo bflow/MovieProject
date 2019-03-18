@@ -2,7 +2,7 @@
 - Built with [ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core/?view=aspnetcore-2.1) and [Entity Framework Core](https://docs.microsoft.com/en-us/ef/core/)
 - Hosted on Heroku as Docker Container: https://netcore2heroku-docker.herokuapp.com/swagger
 - Code Repo: https://github.com/bflow/MovieProject
-- Article about migrating to Heroku: https://bit.ly/2XYkYCA
+- Article about migrating this API from Azure to Heroku: https://bit.ly/2XYkYCA
 
 ## Project Goals
 - Demonstrate ASP.NET Identity authentication
