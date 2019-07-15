@@ -5,9 +5,9 @@
 - Article about migrating this API from Azure to Heroku: https://bit.ly/2XYkYCA
 
 ## Project Goals
-- Demonstrate ASP.NET Identity authentication
-- Demonstrate Kestrel database against Entity Framework Core Code-First DAL
-- Demonstrate .NET Core deployments to Heroku using Docker Linux container 
+- Demonstrate [ASP.NET Identity](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-2.2&tabs=visual-studio#create-a-web-app-with-authentication) authentication
+- Demonstrate Kestrel with Entity Framework Core Code-First DAL
+- Demonstrate [.NET Core deployments to Heroku using Docker](https://bit.ly/2XYkYCA) Linux container 
 
 ## Using the API
 **_Summary:_** 
